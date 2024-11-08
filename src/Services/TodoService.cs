@@ -5,28 +5,34 @@ using TodoListApi.Repositories;
 namespace TodoListApi.Services;
 public class TodoService : ITodoService
 {
-    private readonly ITodoRepository _repository;
+    private readonly ITodoRepository _todoRepository;
 
-    public TodoService(ITodoRepository repository)
+    public TodoService(ITodoRepository todoRepository)
     {
-        _repository = repository;
+        _todoRepository = todoRepository;
     }
 
     public async Task<IEnumerable<Todo>> GetAllTodosAsync()
     {
-        return await _repository.GetAllTodosAsync();
+        return await _todoRepository.GetAllTodosAsync();
     }
     public async Task<Todo?> GetTodoByIdAsync(Guid id)
     {
-        return await _repository.GetTodoByIdAsync(id);
+        return await _todoRepository.GetTodoByIdAsync(id);
     }
     public async Task<Todo?> CreateTodoAsync(TodoRequestDTO todoDto)
     {
-        return await _repository.CreateTodoAsync(todoDto);
+        var todo = new Todo
+        {
+            Title = todoDto.Title,
+            Description = todoDto.Description,
+            IsCompleted = todoDto.IsCompleted
+        };
+        return await _todoRepository.CreateTodoAsync(todo);
     }
     public async Task UpdateTodoAsync(Guid id, TodoRequestDTO todoDto)
     {
-        var todo = await _repository.GetTodoByIdAsync(id);
+        var todo = await _todoRepository.GetTodoByIdAsync(id);
         if (todo == null)
         {
             throw new Exception("Todo not found");
@@ -35,15 +41,15 @@ public class TodoService : ITodoService
         todo.Title = todoDto.Title!;
         todo.Description = todoDto.Description!;
         todo.IsCompleted = todoDto.IsCompleted;
-        await _repository.UpdateTodoAsync(todo);
+        await _todoRepository.UpdateTodoAsync(todo);
     }
     public async Task DeleteTodoAsync(Guid id)
     {
-        var existingTodo = await _repository.GetTodoByIdAsync(id);
+        var existingTodo = await _todoRepository.GetTodoByIdAsync(id);
         if (existingTodo == null)
         {
             throw new Exception("Todo not found");
         }
-        await _repository.DeleteTodoAsync(existingTodo);
+        await _todoRepository.DeleteTodoAsync(existingTodo);
     }
 }

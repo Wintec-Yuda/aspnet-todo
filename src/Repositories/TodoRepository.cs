@@ -21,14 +21,8 @@ public class TodoRepository : ITodoRepository
   {
     return await _context.Todos.FindAsync(id);
   }
-  public async Task<Todo?> CreateTodoAsync(TodoRequestDTO todoDto) 
+  public async Task<Todo?> CreateTodoAsync(Todo todo) 
   {
-    var todo = new Todo
-    {
-      Title = todoDto.Title,
-      Description = todoDto.Description,
-      IsCompleted = todoDto.IsCompleted,
-    };
     var newTodo = await _context.Todos.AddAsync(todo);
     await _context.SaveChangesAsync();
     return newTodo.Entity;
