@@ -15,8 +15,7 @@ obj/
 Thumbs.db
 
 # Ignore local environment settings
-appsettings.Development.json
-appsettings.Production.json
+appsettings.*
 
 # Ignore build output files (e.g., for deployment)
 *.zip
