@@ -16,7 +16,6 @@ namespace TodoListApi.Controllers
             _todoService = todoService;
         }
 
-        // GET: api/Todo
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Todo>>> GetAllTodos()
         {
@@ -24,7 +23,6 @@ namespace TodoListApi.Controllers
             return Ok(todos);
         }
 
-        // GET: api/Todo/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoResponseDTO>> GetTodoById(Guid id)
         {
@@ -36,23 +34,25 @@ namespace TodoListApi.Controllers
             return Ok(todo);
         }
 
-        // POST: api/Todo
         [HttpPost]
-        public async Task<ActionResult<Todo>> CreateTodo([FromBody] TodoCreateDTO todoDto)
+        public async Task<ActionResult<Todo>> CreateTodo([FromBody] TodoRequestDTO todoDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var todo = await _todoService.CreateTodoAsync(todoDto);
             return CreatedAtAction(nameof(GetTodoById), new { id = todo!.Id }, todo);
         }
 
-        // PUT: api/Todo/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateTodo(Guid id, [FromBody] TodoUpdateDTO todoDto)
+        public async Task<IActionResult> UpdateTodo(Guid id, [FromBody] TodoRequestDTO todoDto)
         {
             await _todoService.UpdateTodoAsync(id, todoDto);
             return NoContent();
         }
 
-        // DELETE: api/Todo/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodo(Guid id)
         {

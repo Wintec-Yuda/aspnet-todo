@@ -21,7 +21,7 @@ public class TodoRepository : ITodoRepository
   {
     return await _context.Todos.FindAsync(id);
   }
-  public async Task<Todo?> CreateTodoAsync(TodoCreateDTO todoDto) 
+  public async Task<Todo?> CreateTodoAsync(TodoRequestDTO todoDto) 
   {
     var todo = new Todo
     {

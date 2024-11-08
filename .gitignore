@@ -1,5 +1,5 @@
 # Ignore folders
-Migration
+Migrations
 bin
 obj
 Properties
@@ -24,3 +24,7 @@ Thumbs.db
 
 # Ignore other sensitive files
 *.env
+
+# Ignore file TodoListApi
+TodoListApi.http
+TodoListApi.sln

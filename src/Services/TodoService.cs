@@ -20,11 +20,11 @@ public class TodoService : ITodoService
     {
         return await _repository.GetTodoByIdAsync(id);
     }
-    public async Task<Todo?> CreateTodoAsync(TodoCreateDTO todoDto)
+    public async Task<Todo?> CreateTodoAsync(TodoRequestDTO todoDto)
     {
         return await _repository.CreateTodoAsync(todoDto);
     }
-    public async Task UpdateTodoAsync(Guid id, TodoUpdateDTO todoDto)
+    public async Task UpdateTodoAsync(Guid id, TodoRequestDTO todoDto)
     {
         var todo = await _repository.GetTodoByIdAsync(id);
         if (todo == null)
@@ -34,8 +34,7 @@ public class TodoService : ITodoService
 
         todo.Title = todoDto.Title!;
         todo.Description = todoDto.Description!;
-        if (todoDto.IsCompleted.HasValue)
-            todo.IsCompleted = todoDto.IsCompleted.Value;
+        todo.IsCompleted = todoDto.IsCompleted;
         await _repository.UpdateTodoAsync(todo);
     }
     public async Task DeleteTodoAsync(Guid id)

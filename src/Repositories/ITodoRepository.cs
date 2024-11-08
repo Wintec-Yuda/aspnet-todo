@@ -7,7 +7,7 @@ public interface ITodoRepository
 {
     Task<IEnumerable<Todo>> GetAllTodosAsync();
     Task<Todo?> GetTodoByIdAsync(Guid id);
-    Task<Todo?> CreateTodoAsync(TodoCreateDTO todoDto);
+    Task<Todo?> CreateTodoAsync(TodoRequestDTO todoDto);
     Task UpdateTodoAsync(Todo todo);
     Task DeleteTodoAsync(Todo todo);
 }
