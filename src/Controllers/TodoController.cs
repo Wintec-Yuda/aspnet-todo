@@ -65,11 +65,21 @@ namespace TodoListApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTodo(Guid id, [FromBody] TodoRequestDTO todoDto)
         {
+            try
+            {
             await _todoService.UpdateTodoAsync(id, todoDto);
             return Ok(new {
                 status = "success",
                 message = "Todo updated successfully"
-            });
+            }); 
+            }
+            catch (System.Exception e)
+            {
+                return NotFound(new {
+                    status = "error",
+                    message = e.Message
+                });
+            }
         }
 
         [HttpDelete("{id}")]
