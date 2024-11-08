@@ -1,6 +1,8 @@
-# Ignore bin and obj folders
-bin/
-obj/
+# Ignore folders
+Migration
+bin
+obj
+Properties
 
 # Ignore user-specific files
 .vs/
@@ -15,7 +17,7 @@ obj/
 Thumbs.db
 
 # Ignore local environment settings
-appsettings.*
+*.json
 
 # Ignore build output files (e.g., for deployment)
 *.zip
