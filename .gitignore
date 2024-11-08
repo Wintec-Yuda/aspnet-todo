@@ -1,0 +1,25 @@
+# Ignore bin and obj folders
+bin/
+obj/
+
+# Ignore user-specific files
+.vs/
+.idea/
+.vscode/
+
+# Ignore log files
+*.log
+
+# Ignore macOS and Windows system files
+.DS_Store
+Thumbs.db
+
+# Ignore local environment settings
+appsettings.Development.json
+appsettings.Production.json
+
+# Ignore build output files (e.g., for deployment)
+*.zip
+
+# Ignore other sensitive files
+*.env
