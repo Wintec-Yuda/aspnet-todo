@@ -20,7 +20,12 @@ namespace TodoListApi.Controllers
         public async Task<ActionResult<IEnumerable<Todo>>> GetAllTodos()
         {
             var todos = await _todoService.GetAllTodosAsync();
-            return Ok(todos);
+            
+            return Ok(new {
+                status = "success",
+                message = "Todos retrieved successfully",
+                data = todos
+            });
         }
 
         [HttpGet("{id}")]
@@ -29,9 +34,16 @@ namespace TodoListApi.Controllers
             var todo = await _todoService.GetTodoByIdAsync(id);
             if (todo == null)
             {
-                return NotFound();
+                return NotFound(new {
+                    status = "error",
+                    message = "Todo not found"
+                });
             }
-            return Ok(todo);
+            return Ok(new {
+                status = "success",
+                message = "Todo retrieved successfully",
+                data = todo
+            });
         }
 
         [HttpPost]
@@ -39,7 +51,11 @@ namespace TodoListApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new {
+                    status = "error",
+                    message = "Validation failed",
+                    errors = ModelState.Values.SelectMany(v => v.Errors.Select(e => e.ErrorMessage))
+                });
             }
 
             var todo = await _todoService.CreateTodoAsync(todoDto);
@@ -50,14 +66,20 @@ namespace TodoListApi.Controllers
         public async Task<IActionResult> UpdateTodo(Guid id, [FromBody] TodoRequestDTO todoDto)
         {
             await _todoService.UpdateTodoAsync(id, todoDto);
-            return NoContent();
+            return Ok(new {
+                status = "success",
+                message = "Todo updated successfully"
+            });
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodo(Guid id)
         {
             await _todoService.DeleteTodoAsync(id);
-            return NoContent();
+            return Ok(new {
+                status = "success",
+                message = "Todo deleted successfully"
+            });
         }
     }
 }
