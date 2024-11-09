@@ -20,6 +20,11 @@ namespace TodoListApi.Data
             modelBuilder.Entity<User>()
                 .Property(u => u.Id)
                 .HasDefaultValueSql("gen_random_uuid()");
+
+            modelBuilder.Entity<Todo>()
+            .HasOne(t => t.User)
+            .WithMany(u => u.Todos)
+            .HasForeignKey(t => t.UserId);  
         }
     }
 }

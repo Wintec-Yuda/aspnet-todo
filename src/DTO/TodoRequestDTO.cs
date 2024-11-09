@@ -13,5 +13,8 @@ namespace TodoListApi.DTO
         
         [Required]
         public bool IsCompleted { get; set; } = false;
+
+        [Required]
+        public Guid UserId { get; set; }
     }
 }

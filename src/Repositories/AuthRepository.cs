@@ -12,7 +12,7 @@ public class AuthRepository : IAuthRepository
     _context = context;
   }
 
-  public async Task RegisterAsync(User user)
+  public async Task Register(User user)
   {
     var newUser = await _context.Users.AddAsync(user);
     await _context.SaveChangesAsync();

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TodoListApi.DTO;
 using TodoListApi.Services;
+using TodoListApi.Utils;
 
 namespace TodoListApi.Controllers;
 [Route("api/[controller]")]
@@ -15,9 +16,9 @@ public class AuthController : ControllerBase
   }
 
   [HttpPost("register")]
-  public async Task<IActionResult> RegisterAsync(UserRegisterDTO registerDto)
+  public async Task<IActionResult> Register(UserRegisterDTO registerDto)
   {
-    await _authService.RegisterAsync(registerDto);
+    await _authService.Register(registerDto);
     return Ok(new
     {
       status = "success",
@@ -26,9 +27,9 @@ public class AuthController : ControllerBase
   }
 
   [HttpPost("login")]
-  public async Task<IActionResult> LoginAsync(UserLoginDTO loginDto)
+  public async Task<IActionResult> Login(UserLoginDTO loginDto)
   {
-    var token = await _authService.LoginAsync(loginDto);
+    var token = await _authService.Login(loginDto);
     if (token == null)
     {
       return Unauthorized(new {
@@ -40,6 +41,18 @@ public class AuthController : ControllerBase
       status = "success",
       message = "Login Successfully",
       token
+    });
+  }
+
+  [HttpGet("claims/{token}")]
+  public IActionResult GetClaims(string token)
+  {
+    var claims = Security.GetClaimValue(token);
+    return Ok(new
+    {
+      status = "success",
+      message = "Claims retrieved successfully",
+      data = claims
     });
   }
 }

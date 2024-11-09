@@ -4,9 +4,10 @@ using TodoListApi.Models;
 namespace TodoListApi.Services;
 public interface ITodoService
 {
-    Task<IEnumerable<Todo>> GetAllTodosAsync();
-    Task<Todo?> GetTodoByIdAsync(Guid id);
-    Task<Todo?> CreateTodoAsync(TodoRequestDTO todo);
-    Task UpdateTodoAsync(Guid id, TodoRequestDTO todo);
-    Task DeleteTodoAsync(Guid id);
+  Task<IEnumerable<Todo>> GetAllTodos();
+  Task<Todo?> GetTodoById(Guid id);
+  Task<Todo?> CreateTodo(TodoRequestDTO todo);
+  Task UpdateTodo(Guid id, TodoRequestDTO todo);
+  Task DeleteTodo(Guid id);
+  Task<IEnumerable<TodoResponseDTO>> GetTodosByUserId(Guid userId);
 }

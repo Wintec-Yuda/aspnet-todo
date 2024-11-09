@@ -4,5 +4,5 @@ namespace TodoListApi.Repositories;
 
 public interface IAuthRepository
 {
-  Task RegisterAsync(User User);
+  Task Register(User User);
 }

@@ -5,9 +5,10 @@ namespace TodoListApi.Repositories;
 // Interface untuk Repository Todo
 public interface ITodoRepository
 {
-    Task<IEnumerable<Todo>> GetAllTodosAsync();
-    Task<Todo?> GetTodoByIdAsync(Guid id);
-    Task<Todo?> CreateTodoAsync(Todo todo);
-    Task UpdateTodoAsync(Todo todo);
-    Task DeleteTodoAsync(Todo todo);
+    Task<IEnumerable<Todo>> GetAllTodos();
+    Task<Todo?> GetTodoById(Guid id);
+    Task<Todo?> CreateTodo(Todo todo);
+    Task UpdateTodo(Todo todo);
+    Task DeleteTodo(Todo todo);
+    Task<IEnumerable<TodoResponseDTO>> GetTodosByUserId(Guid userId);
 }

@@ -1,4 +1,3 @@
-using BCrypt.Net;
 using TodoListApi.DTO;
 using TodoListApi.Models;
 using TodoListApi.Repositories;
@@ -19,7 +18,7 @@ public class AuthService : IAuthService
     _security = security;
   }
 
-  public async Task RegisterAsync(UserRegisterDTO registerDto)
+  public async Task Register(UserRegisterDTO registerDto)
   {
     var user = new User
     {
@@ -27,12 +26,12 @@ public class AuthService : IAuthService
       Email = registerDto.Email!,
       Password = BCrypt.Net.BCrypt.HashPassword(registerDto.Password)
     };
-    await _authRepository.RegisterAsync(user);
+    await _authRepository.Register(user);
   }
 
-  public async Task<string?> LoginAsync(UserLoginDTO loginDto)
+  public async Task<string?> Login(UserLoginDTO loginDto)
   {
-    var user = await _userRepository.getUserByEmail(loginDto.Email!);
+    var user = await _userRepository.GetUserByEmail(loginDto.Email!);
     if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.Password))
     {
       return null!;

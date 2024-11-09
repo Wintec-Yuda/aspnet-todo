@@ -18,6 +18,8 @@ public class Security : ISecurity
   {
     var claims = new[]
     {
+      new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+      new Claim(ClaimTypes.Email, user.Email),
       new Claim(ClaimTypes.Name, user.Name),
       new Claim(ClaimTypes.Role, user.Role)
     };
@@ -35,5 +37,21 @@ public class Security : ISecurity
     );
 
     return new JwtSecurityTokenHandler().WriteToken(token);
+  }
+
+  public static UserClaims GetClaimValue(string token)
+  {
+    var handler = new JwtSecurityTokenHandler();
+    var jwtToken = handler.ReadJwtToken(token);
+    var id = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+    var name = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value;
+    var role = jwtToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+
+    return new UserClaims
+    {
+      Id = id,
+      Name = name,
+      Role = role
+    };
   }
 }
